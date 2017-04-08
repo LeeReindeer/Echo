@@ -57,6 +57,7 @@ public class WechatServlet extends HttpServlet {
             textMsg.setCreateTime(new Date().getTime());
             textMsg.setMsgType("text");
             //获取access_token
+            //todo 刷新时间2h，不要重复获取
             WechatUtil wechatUtil=new WechatUtil();
             AccessToken token=wechatUtil.getAcessToken();
             String access_token=token.getAccess_token();
