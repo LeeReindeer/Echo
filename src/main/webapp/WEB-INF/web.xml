@@ -1,0 +1,15 @@
+<!DOCTYPE web-app PUBLIC
+ "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+ "http://java.sun.com/dtd/web-app_2_3.dtd" >
+<web-app>
+  <display-name>Echo echo</display-name>
+  <servlet>
+    <servlet-name>WechatServlet</servlet-name>
+    <servlet-class>Servlet.WechatServlet</servlet-class>
+  </servlet>
+  <!-- url-pattern中配置用于指定该Servlet的访问路径 -->
+  <servlet-mapping>
+    <servlet-name>WechatServlet</servlet-name>
+    <url-pattern>/newEcho</url-pattern>
+  </servlet-mapping>
+</web-app>
