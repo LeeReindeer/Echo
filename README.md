@@ -29,7 +29,7 @@ chmod +x *.sh
 ## 启动tmocat
 - `./startup.sh`
 (关闭`./shutdown.sh`)
-- 访问http://localhost:8080/
+- 访问http://localhost:80/
 ## Java web 应用
 - [x] maven导出 .war包
 - [x] 现在本地调试如`http://localhost:8080/Echoyappy/echo`，如果报空指针的错．就是可以的．因为没有穿进去数据．
