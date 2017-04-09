@@ -1,10 +1,8 @@
 package Servlet;
 
 import Bean.Message.TextMsg;
-import Util.AccessToken;
 import Util.MsgUtil;
 import Util.SignUtil;
-import Util.WechatUtil;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -58,11 +56,22 @@ public class WechatServlet extends HttpServlet {
             textMsg.setMsgType("text");
             //获取access_token
             //todo 刷新时间2h，不要重复获取
-            WechatUtil wechatUtil=new WechatUtil();
-            AccessToken token=wechatUtil.getAcessToken();
-            String access_token=token.getAccess_token();
-            int expires_in=token.getExpires_in();
-            textMsg.setContent("Hello"+Content+"\n"+access_token+"\n"+expires_in);
+            /*try{
+                WechatUtil wechatUtil=new WechatUtil();
+                AccessToken token=wechatUtil.getAcessToken();
+                String access_token=token.getAccess_token();
+                int expires_in=token.getExpires_in();
+
+                String menu= JSONObject.fromObject(wechatUtil.initMenu()).toString();
+                int errcode=wechatUtil.creatMenu(menu,access_token);
+                if (errcode==0){
+
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            */
+            textMsg.setContent("Hello"+Content+"\n");
             String sendMsg=msgUtil.messageToXml(textMsg);
             writer.print(sendMsg);
         }catch (Exception e){
