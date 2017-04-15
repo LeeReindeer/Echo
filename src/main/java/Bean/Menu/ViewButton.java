@@ -6,6 +6,10 @@ package Bean.Menu;
 public class ViewButton extends Button {
     private String url;
 
+    public ViewButton() {
+        super.setType("view");
+    }
+
     public String getUrl() {
         return url;
     }

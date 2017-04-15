@@ -6,6 +6,10 @@ package Bean.Menu;
 public class ClickButton extends  Button {
     private String key;
 
+    public ClickButton() {
+        super.setType("click");
+    }
+
     public String getKey() {
         return key;
     }
