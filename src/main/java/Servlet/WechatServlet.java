@@ -66,7 +66,9 @@ public class WechatServlet extends HttpServlet {
                     sendMsg=msgUtil.initalMessage(ToUserName,FromUserName,WELCOMEHINT);
                 }
                 if (eventype.equals(msgUtil.EVENT_VIEW)){
-                    sendMsg=msgUtil.initalMessage(ToUserName,FromUserName,"view");
+                    //todo
+                    String url=map.get("EventKey");
+                    sendMsg=msgUtil.initalMessage(ToUserName,FromUserName,url);
                 }
                 if (eventype.equals(msgUtil.EVENT_CLICK)){
                     sendMsg=msgUtil.initalMessage(ToUserName,FromUserName,"click");
