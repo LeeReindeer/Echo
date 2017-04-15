@@ -35,10 +35,11 @@ chmod +x *.sh
 - [x] 现在本地调试如`http://localhost:8080/Echoyappy/echo`，如果报空指针的错．就是可以的．因为没有穿进去数据．
 - [x] 上传.war包到服务器，访问`http://yappyap.com:8080/Echoyappy/echo`这是和微信连接的链接．（微信要求端口为80，但是tomcat开８０端口却访问不了，本地和服务器都是这种情况）
 - [x] 访问 http://yappyap.com/Echoyappy 为web界面．
-- [ ] 内网穿透调试
+- [ ] ~~内网穿透调试~~
 - [x] 增加文本消息的读取和回复
 - [x] 增加菜单
-- [ ] 菜事件响应
-- [ ] 数据库
+- [x] 菜事件响应
+- [x] 网页授权
+- [ ] 连接数据库
 # License
 Apache 2.0
