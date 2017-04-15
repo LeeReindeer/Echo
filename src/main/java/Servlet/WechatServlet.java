@@ -1,6 +1,5 @@
 package Servlet;
 
-import Bean.Message.TextMsg;
 import Util.MsgUtil;
 import Util.SignUtil;
 
@@ -10,13 +9,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Date;
 import java.util.Map;
 
 /**
  * Created by lee on 4/8/17.
  */
 public class WechatServlet extends HttpServlet {
+    private static final String WELCOMEHINT="感谢你的关注"+"\n"+""+"Enjoy it!";
     @Override
     protected void doGet(HttpServletRequest request
             , HttpServletResponse response)
@@ -40,6 +39,7 @@ public class WechatServlet extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
         PrintWriter writer=response.getWriter();
         MsgUtil msgUtil=new MsgUtil();
+        String sendMsg=null;
         try {
             //解析xml
             Map<String,String> map=msgUtil.parseXml(request);
@@ -49,30 +49,30 @@ public class WechatServlet extends HttpServlet {
             String Content=map.get("Content");
             String MsgType=map.get("MsgType");
 
-            TextMsg textMsg=new TextMsg();
+            /*TextMsg textMsg=new TextMsg();
             textMsg.setFromUserName(ToUserName);
             textMsg.setToUserName(FromUserName);
             textMsg.setCreateTime(new Date().getTime());
             textMsg.setMsgType("text");
-            //获取access_token
-            //todo 刷新时间2h，不要重复获取
-            /*try{
-                WechatUtil wechatUtil=new WechatUtil();
-                AccessToken token=wechatUtil.getAcessToken();
-                String access_token=token.getAccess_token();
-                int expires_in=token.getExpires_in();
-
-                String menu= JSONObject.fromObject(wechatUtil.initMenu()).toString();
-                int errcode=wechatUtil.creatMenu(menu,access_token);
-                if (errcode==0){
-
-                }
-            }catch (Exception e){
-                e.printStackTrace();
-            }
+            textMsg.setContent("hello"+Content);
             */
-            textMsg.setContent("Hello"+Content+"\n");
-            String sendMsg=msgUtil.messageToXml(textMsg);
+            if (msgUtil.MESSAGE_TEXT.equals(MsgType)){
+                sendMsg=msgUtil.initalMessage(ToUserName,FromUserName,"Hello "+Content);
+            }
+
+            if (msgUtil.MESSAGE_EVENT.equals(MsgType)){
+                String eventype=map.get("Event");
+                if (eventype.equals(msgUtil.EVENT_SUB)){
+                    sendMsg=msgUtil.initalMessage(ToUserName,FromUserName,WELCOMEHINT);
+                }
+                if (eventype.equals(msgUtil.EVENT_VIEW)){
+                    sendMsg=msgUtil.initalMessage(ToUserName,FromUserName,"view");
+                }
+                if (eventype.equals(msgUtil.EVENT_CLICK)){
+                    sendMsg=msgUtil.initalMessage(ToUserName,FromUserName,"click");
+                }
+            }
+            //sendMsg=msgUtil.messageToXml(textMsg);
             writer.print(sendMsg);
         }catch (Exception e){
             e.printStackTrace();
