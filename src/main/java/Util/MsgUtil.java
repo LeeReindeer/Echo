@@ -28,8 +28,8 @@ public class MsgUtil {
     public static final String MESSAGE_EVENT="event";
     public static final String EVENT_SUB="subscribe";
     public static final String EVENT_UNSUB="unsubscribe";
-    public static final String EVENT_CLICK="click";
-    public static final String EVENT_VIEW="view";
+    public static final String EVENT_CLICK="CLICK";
+    public static final String EVENT_VIEW="VIEW";
     public static final String MESSAGE_TEXT="text";
     public static final String MESSAGE_IMAGE="image";
     public static final String MESSAGE_VIDEO="video";
