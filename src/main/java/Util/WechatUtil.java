@@ -4,7 +4,6 @@ package Util;
 //import com.google.gson.Gson;
 
 import Bean.Menu.Button;
-import Bean.Menu.ClickButton;
 import Bean.Menu.Menu;
 import Bean.Menu.ViewButton;
 import net.sf.json.JSONObject;
@@ -138,33 +137,30 @@ public class WechatUtil {
     * */
     public Menu initMenu(){
         Menu menu=new Menu();
-        ClickButton clickButton1=new ClickButton();
-        clickButton1.setName("clickButton");
-        clickButton1.setType("click");
-        clickButton1.setKey("11");
+        ViewButton viewButton=new ViewButton();
+        viewButton.setUrl("http://leezoom.xyz");
+        viewButton.setName("新建通知");
 
         ViewButton viewButton1=new ViewButton();
-        viewButton1.setName("viewButton");
+        viewButton1.setName("课表");
         viewButton1.setUrl("http://leezoom.xyz");
-        viewButton1.setType("view");
 
         //子菜单
-        ClickButton clickButton2=new ClickButton();
-        clickButton2.setName("ScanCode");
-        clickButton2.setType("scancode_push");
-        clickButton2.setKey("21");
+        ViewButton viewButton2=new ViewButton();
+        viewButton2.setName("账号设置");
+        viewButton2.setUrl("http://leezoom.xyz");
 
         //子菜单
-        ClickButton clickButton3=new ClickButton();
-        clickButton3.setName("ScanCode");
-        clickButton3.setType("scancode_push");
-        clickButton3.setKey("21");
+        ViewButton viewButton3=new ViewButton();
+        viewButton3.setName("全部通知");
+        viewButton3.setUrl("http://leezoom.xyz");
+
 
         Button button=new Button();
-        button.setName("主菜单");
-        button.setSub_button(new Button[]{clickButton2,clickButton3});
+        button.setName("我");
+        button.setSub_button(new Button[]{viewButton3,viewButton2});
 
-        menu.setButton(new Button[]{clickButton1,viewButton1,button});
+        menu.setButton(new Button[]{viewButton,viewButton1,button});
         return menu;
     }
 
