@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Writer;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,8 +25,16 @@ import java.util.Map;
  */
 public class MsgUtil {
 
-    public final String MESSAGE_EVENT="subscribe";
-    public final String MESSAGE_TEXT="text";
+    public static final String MESSAGE_EVENT="event";
+    public static final String EVENT_SUB="subscribe";
+    public static final String EVENT_UNSUB="unsubscribe";
+    public static final String EVENT_CLICK="click";
+    public static final String EVENT_VIEW="view";
+    public static final String MESSAGE_TEXT="text";
+    public static final String MESSAGE_IMAGE="image";
+    public static final String MESSAGE_VIDEO="video";
+    public static final String MESSAGE_LINK="link";
+    public static final String MESSAGE_LOCATION="location";
     /**
      * 解析微信发来的请求（XML）
      *
@@ -90,11 +99,16 @@ public class MsgUtil {
         });
         xstream.alias("xml", BaseMsg.class);
         xstream.alias("xml", TextMsg.class);
-        /*xstream.alias("xml", ImageMsg.class);
-        xstream.alias("xml", MusicMsg.class);
-        xstream.alias("xml", ArticleMsg.class);
-         xstream.alias("xml", VideoMsg.class);
-        xstream.alias("xml", VoiceMsg.class);
-      */
+    }
+
+    public String initalMessage(String ToUserName,String FromUserName,String Content){
+        TextMsg textMsg=new TextMsg();
+        textMsg.setContent(Content);
+        textMsg.setFromUserName(ToUserName);
+        textMsg.setToUserName(FromUserName);
+        textMsg.setMsgType(MESSAGE_TEXT);
+        textMsg.setCreateTime(new Date().getTime());
+        String xmlmsg=messageToXml(textMsg);
+        return xmlmsg;
     }
 }
