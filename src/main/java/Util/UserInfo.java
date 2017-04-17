@@ -13,6 +13,15 @@ public class UserInfo {
     private String headimgurl;
     private String privilege;
     private String unionid=null;
+    private String schoolid;
+
+    public String getSchoolid() {
+        return schoolid;
+    }
+
+    public void setSchoolid(String schoolid) {
+        this.schoolid = schoolid;
+    }
 
     public String getNickname() {
         return nickname;
