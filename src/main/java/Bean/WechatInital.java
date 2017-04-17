@@ -16,7 +16,7 @@ public class WechatInital {
             AccessToken token=wechatUtil.getAcessToken();
             String access_token=token.getAccess_token();
             int expires_in=token.getExpires_in();
-            System.out.println(access_token);
+            System.out.println("Access_token:"+access_token);
 
             //转化为JSON
             String menu= JSONObject.fromObject(wechatUtil.initMenu()).toString();
