@@ -6,6 +6,7 @@ package Util;
 import Bean.Menu.Button;
 import Bean.Menu.Menu;
 import Bean.Menu.ViewButton;
+import ObjectC.AccessToken;
 import net.sf.json.JSONObject;
 
 import java.io.*;
@@ -158,6 +159,7 @@ public class WechatUtil {
     public Menu initMenu(){
         Menu menu=new Menu();
         String url=AUTH_URL.replace("APPID",APPID).replace("REDIRECT_URI","http://120.24.73.230/Echoo1/OAuth").replace("SCOPE","snsapi_userinfo");
+
         ViewButton viewButton=new ViewButton();
         viewButton.setUrl("http://leezoom.xyz");
         viewButton.setName("新建通知");

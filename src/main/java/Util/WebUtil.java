@@ -1,5 +1,7 @@
 package Util;
 
+import ObjectC.OAuth2AccessToken;
+import ObjectC.UserInfo;
 import net.sf.json.JSONObject;
 
 /**
@@ -33,7 +35,7 @@ public class WebUtil extends WechatUtil{
      * @param openid
      * @return userInfo
      */
-    public UserInfo getUserInfo(String webAccessToken,String openid){
+    public UserInfo getUserInfo(String webAccessToken, String openid){
         UserInfo userInfo=new UserInfo();
         String url=USER_INFO_URL.replace("ACCESS_TOKEN",webAccessToken).replace("OPENID",openid);
         JSONObject jsonObject = doGet(url);

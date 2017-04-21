@@ -5,6 +5,7 @@ import ObjectC.UserInfo;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
@@ -42,7 +43,8 @@ public class MysqlUtil {
                 prepare.setString(4, "Default SchoolId");
             }
             prepare.executeUpdate();
-            connection.close();
+            System.out.println("write success!!");
+            //connection.close();
         } catch (SQLException e){
             e.printStackTrace();
         }
@@ -66,5 +68,23 @@ public class MysqlUtil {
 
     public void updateData(UserInfo user){
 
+    }
+
+    public boolean isUserInSql(String openid){
+        boolean hasIN=false;
+        try{
+            PreparedStatement prepare = connection
+                    .prepareStatement("select * from users where openid=?");
+            prepare.setString(1,openid);
+            ResultSet rs =prepare.executeQuery();
+            if (rs.next()){
+                hasIN=true;
+            }else {
+                hasIN=false;
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return hasIN;
     }
 }
