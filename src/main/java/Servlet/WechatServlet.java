@@ -58,6 +58,9 @@ public class WechatServlet extends HttpServlet {
             */
             if (msgUtil.MESSAGE_TEXT.equals(MsgType)){
                 sendMsg=msgUtil.initalMessage(ToUserName,FromUserName,"Hello "+Content);
+                if (Content.equals("view")){
+                    //Todo
+                }
             }
 
             if (msgUtil.MESSAGE_EVENT.equals(MsgType)){
