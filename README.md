@@ -18,6 +18,6 @@ Yappy Doggie
 - [x] 增加菜单
 - [x] 菜单事件响应
 - [x] 网页授权
-- [ ] 连接数据库
+- [x] 连接数据库
 # License
 Apache 2.0
