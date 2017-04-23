@@ -20,4 +20,4 @@ Yappy Doggie
 - [x] 网页授权
 - [x] 连接数据库
 # License
-Apache 2.0
+GPL-3.0
