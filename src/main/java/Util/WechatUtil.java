@@ -158,13 +158,13 @@ public class WechatUtil {
     */
     public Menu initMenu(){
         Menu menu=new Menu();
-        String url=AUTH_URL.replace("APPID",APPID).replace("REDIRECT_URI","http://120.24.73.230/Echoo1/OAuth").replace("SCOPE","snsapi_userinfo");
-
+        //String url=AUTH_URL.replace("APPID",APPID).replace("REDIRECT_URI","http://120.24.73.230/Echoo1/OAuth").replace("SCOPE","snsapi_userinfo");
+          String url="http://120.24.73.230/Echoo1/login.jsp";
         ViewButton viewButton=new ViewButton();
         viewButton.setUrl("http://leezoom.xyz");
         viewButton.setName("新建通知");
 
-        System.out.println("授权网址"+url);
+        //System.out.println("授权网址"+url);
 
         ViewButton viewButton1=new ViewButton();
         viewButton1.setName("课表");
@@ -204,5 +204,10 @@ public class WechatUtil {
             errcode=jsonObject.getInt("errcode");
         }
         return  errcode;
+    }
+
+    public String getRedirextUrl(){
+        String reUrl=AUTH_URL.replace("APPID",APPID).replace("REDIRECT_URI","http://120.24.73.230/Echoo1/OAuth").replace("SCOPE","snsapi_userinfo");
+        return reUrl;
     }
 }

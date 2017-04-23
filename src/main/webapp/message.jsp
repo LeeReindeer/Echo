@@ -1,6 +1,7 @@
 
 <%@ page language="java" pageEncoding="UTF-8"%>
-<%@ page import="Util.UserInfo;"%>
+<%@ page import="ObjectC.UserInfo;"%>
+
 <html>
 <head>
 	<title>账号设置</title>
@@ -23,18 +24,10 @@
 	    <div id="users"><p>
     	<form>
 
-    	<h1>Echo</h1>
-    	<center>
-    	  <form method=get>
-          hi <input type=text name=schoolid>
-          <input type=submit value="Submit">
-          </form>
-    	</center>
-
-    	</p></div>
-    </center>
-
-    <% out.print(user.getSchoolid()); %>
+    	<h1>绑定微信</h1>
+    	<%out.print("绑定成功");%>
+    	//todo 回调参数openid user.getOpenid();
+    	<input type="submit" value="返回个人设置">
 
 	<center>
 
@@ -47,7 +40,7 @@
 
 	<%
 		}
-		else 
+		else
 			out.print("用户不同意授权,未获取到用户信息！");
 	%>
 </body>

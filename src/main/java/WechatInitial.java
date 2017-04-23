@@ -6,7 +6,7 @@ import net.sf.json.JSONObject;
  * Created by lee on 4/9/17.
  */
 public class WechatInitial {
-    //private static final String access_token="1quFT33F7YLcQbF99QGT_fNUZ4CQSaGBnpVSenF-BqfGZLfeu1ewDSaKdwC8v60TIFwz8XFXwdg9vRxB77lu5LPkUL9HkXfhpU6WEIsRMe4qQe2d3ZpPupB7uu9mTHexHVVdAAAXLL";
+
     public static void main(String[] args){
         try{
             WechatUtil wechatUtil=new WechatUtil();
