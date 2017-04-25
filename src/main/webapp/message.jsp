@@ -1,6 +1,6 @@
 
 <%@ page language="java" pageEncoding="UTF-8"%>
-<%@ page import="ObjectC.UserInfo;"%>
+<%@ page import="ObjectC.UserInfo"%>
 
 <html>
 <head>
@@ -18,23 +18,19 @@
 
 		UserInfo user = (UserInfo)request.getAttribute("UserInfo");
 		if(null != user) {
+		String name=user.getName();
 	%>
 
     <center>
 	    <div id="users"><p>
-    	<form>
+    	  <%=name %>
+           绑定成功！<br />
+    	<a href="profile.jsp">返回个人设置</a>
+	</center>
 
-    	<h1>绑定微信</h1>
-    	<%out.print("绑定成功");%>
-    	//todo 回调参数openid user.getOpenid();
-    	<input type="submit" value="返回个人设置">
-
-	<center>
-
+    <center>
 	<div id="under">
-
 	<p>Copyright © 2016-2017 Yappy Doggie</p>
-
 	</div>
 	</center>
 

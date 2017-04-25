@@ -6,7 +6,7 @@
   		*{margin:0; padding:0}
   		table{border:1px dashed #B9B9DD;font-size:12pt}
   		td{border:1px dashed #B9B9DD;word-break:break-all; word-wrap:break-word;}
-  		#under{width: 200px;height: 20px;margin-top: 300px;}
+  		#under{width: 200px;height: 20px;margin-top: 350px;}
   	</style>
  </head>
  <body>
