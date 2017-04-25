@@ -34,9 +34,11 @@ public class MysqlUtil {
      * @param user
      */
     public void addUser(UserInfo user){
+        String school=user.getSchool();
+        String schoolname= SchoolName.getSchoolId(school);
         try {
             PreparedStatement prepare = connection
-                    .prepareStatement("insert into users(openid,nickname,sex,schoolid) values (?, ?, ?, ? )");
+                    .prepareStatement("insert into "+schoolname+"(openid,nickname,sex,schoolid) values (?, ?, ?, ? )");
             // Parameters start with 1
             prepare.setString(1,user.getOpenid());
             prepare.setString(2,user.getNickname());
@@ -59,9 +61,11 @@ public class MysqlUtil {
      * @param user
      */
     public void deleteUser(UserInfo user){
+        String school=user.getSchool();
+        String schoolname= SchoolName.getSchoolId(school);
         try {
             PreparedStatement prepare = connection
-                    .prepareStatement("delete from users where openid=?");
+                    .prepareStatement("delete from "+schoolname+" where openid=?");
             // Parameters start with 1
             prepare.setString(1,user.getOpenid());
             prepare.executeUpdate();
@@ -73,47 +77,50 @@ public class MysqlUtil {
     /**
      * 更新数据
      * @param userInfo
+     * @param updateKey
      */
     public void updateUser(UserInfo userInfo,int updateKey) {
+        String school=userInfo.getSchool();
+        String schoolname= SchoolName.getSchoolId(school);
         switch (updateKey){
-            //update schoolid and nickname
-            case 1:
+            //update openid
+            case OPRNID:
                 try {
-                    if (isUserInSql(userInfo.getSchoolid(),2)) {
                         PreparedStatement prepare = connection
-                                .prepareStatement("update users set schoolid=?,nickname=?" +
-                                        "where schoolid=?");
-                        prepare.setString(1, userInfo.getSchoolid());
-                        prepare.setString(1, userInfo.getNickname());
+                                .prepareStatement("update "+schoolname+" set openid=?" + "where schoolid=?");
+                        prepare.setString(1, userInfo.getOpenid());
+                        prepare.setString(2, userInfo.getSchoolid());
                         prepare.executeUpdate();
-                    }
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
 
                 break;
-            case 2:
+            case SCHOOLID:
                 break;
             default:
                 break;
         }
-
     }
 
     /**
      *
-     * @param id
+     * @param user
+     * @param key
      * @return isIn
      */
-    public boolean isUserInSql(String id,int key){
+    public boolean isUserInSql(UserInfo user,int key){
         boolean isIn=false;
+        String openid=user.getOpenid();
+        String schoolid=user.getSchoolid();
+        String schoolname=SchoolName.getSchoolId(schoolid);
         switch (key) {
             //check openid
             case OPRNID:
                 try {
                     PreparedStatement prepare = connection
-                            .prepareStatement("select * from users where openid=?");
-                    prepare.setString(1, id);
+                            .prepareStatement("select * from "+schoolname+" where openid=?");
+                    prepare.setString(1, openid);
                     ResultSet rs = prepare.executeQuery();
                     if (rs.next()) {
                         isIn = true;
@@ -128,8 +135,8 @@ public class MysqlUtil {
             case SCHOOLID:
                 try {
                     PreparedStatement prepare = connection
-                            .prepareStatement("select * from users where schoolid=?");
-                    prepare.setString(1, id);
+                            .prepareStatement("select * from "+schoolname+" where schoolid=?");
+                    prepare.setString(1, schoolid);
                     ResultSet rs = prepare.executeQuery();
                     if (rs.next()) {
                         isIn = true;
@@ -187,9 +194,9 @@ public class MysqlUtil {
         String schoolname= SchoolName.getSchoolId(school);
         try {
             PreparedStatement prepare = connection
-                    .prepareStatement("select * from "+schoolname +" where schoolid=? and password=?");
+                    .prepareStatement("select * from "+schoolname +" where schoolid=?");
             prepare.setString(1, schoolid);
-            prepare.setString(2,password);
+            //prepare.setString(2,password);
             rs = prepare.executeQuery();
             if (rs.next()) {
                 return  rs;
