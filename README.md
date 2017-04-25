@@ -4,10 +4,10 @@ Yappy Doggie
 
 
 
-- [ ] 实现主要功能
-- 微信端
-- web端
-- 移动端
+## 实现主要功能
+- [x] 微信端
+- [ ] web端
+- [ ] 移动端
 
 ## Java web 应用
 - [x] maven导出 .war包
