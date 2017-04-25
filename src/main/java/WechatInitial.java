@@ -10,7 +10,6 @@ public class WechatInitial {
     public static void main(String[] args){
         try{
             WechatUtil wechatUtil=new WechatUtil();
-
             AccessToken token=wechatUtil.getAcessToken();
             String access_token=token.getAccess_token();
             int expires_in=token.getExpires_in();
@@ -21,6 +20,7 @@ public class WechatInitial {
             int errcode=wechatUtil.creatMenu(menu,access_token);
             if (errcode==0){
                 System.out.println("创建菜单成功");
+                System.out.println(menu);
             }else {
                 System.out.println("创建菜单失败"+errcode);
             }

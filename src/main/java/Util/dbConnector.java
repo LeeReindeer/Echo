@@ -11,10 +11,11 @@ public class dbConnector {
 
     private static Connection connection=null;
     private final static String url = "jdbc:mysql://127.0.0.1:3306/UserDB";
-    //private final static String user="lee";
-    private final static String user="root";
-    private final static String password="Aa1314bbbfgh@";
-    //private final static String password="987654321.";
+    private final static String user="lee";
+    //private final static String user="root";
+    //todo remember to change pswd
+    //private final static String password="Aa1314bbbfgh@";
+    private final static String password="987654321.";
     private final static String drive="com.mysql.jdbc.Driver";
 
     public static Connection getConnector()  {
