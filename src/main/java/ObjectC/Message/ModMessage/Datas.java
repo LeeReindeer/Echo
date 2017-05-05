@@ -3,7 +3,7 @@ package ObjectC.Message.ModMessage;
 /**
  * Created by lee on 5/5/17.
  */
-public  abstract class datas {
+public  abstract class Datas {
     private String value;
     private String color;
 
