@@ -1,13 +1,16 @@
 package Util;
 
 
+import ObjectC.Schedule;
+import ObjectC.Schedules;
 import ObjectC.SchoolName;
 import ObjectC.UserInfo;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @Author lee
@@ -21,12 +24,6 @@ public class MysqlUtil {
 
     public MysqlUtil(Connection connection) {
         this.connection = dbConnector.getConnector();
-    }
-
-    public UserInfo getData(){
-        UserInfo user=new UserInfo();
-
-        return user;
     }
 
     /**
@@ -87,9 +84,11 @@ public class MysqlUtil {
             case OPRNID:
                 try {
                         PreparedStatement prepare = connection
-                                .prepareStatement("update "+schoolname+" set openid=?" + "where schoolid=?");
-                        prepare.setString(1, userInfo.getOpenid());
-                        prepare.setString(2, userInfo.getSchoolid());
+                                .prepareStatement("update "+schoolname+" set openid=? and headimgurl=? and nickname=?" + "where schoolid=?  ");
+                        prepare.setString(1,userInfo.getOpenid());
+                        prepare.setString(2,userInfo.getHeadimgurl());
+                        prepare.setString(3,userInfo.getNickname());
+                        prepare.setString(4,userInfo.getSchoolid());
                         prepare.executeUpdate();
                 } catch (SQLException e) {
                     e.printStackTrace();
@@ -112,8 +111,9 @@ public class MysqlUtil {
     public boolean isUserInSql(UserInfo user,int key){
         boolean isIn=false;
         String openid=user.getOpenid();
+        String school=user.getSchool();
         String schoolid=user.getSchoolid();
-        String schoolname=SchoolName.getSchoolId(schoolid);
+        String schoolname=SchoolName.getSchoolId(school);
         switch (key) {
             //check openid
             case OPRNID:
@@ -186,6 +186,11 @@ public class MysqlUtil {
         return isIn;
     }
 
+    /**
+     *
+     * @param user
+     * @return
+     */
     public ResultSet checkResult(UserInfo user){
         ResultSet rs=null;
         String schoolid=user.getSchoolid();
@@ -207,5 +212,67 @@ public class MysqlUtil {
             e.printStackTrace();
         }
         return rs;
+    }
+
+    /**
+     * 用schoolid获取所选课表
+     * @param schoolid
+     * @return
+     */
+    public List<String> getClassSelected(String schoolid){
+        ResultSet rs=null;
+        List<String> classList=new ArrayList<String>();
+        try{
+            PreparedStatement prepare = connection
+                    .prepareStatement("select * from student_schedule where schoolid=?");
+            prepare.setString(1, schoolid);
+            rs=prepare.executeQuery();
+            while (rs.next()) {
+                classList.add(rs.getString("classid"));
+                System.out.println(rs.getString("classid"));
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+
+        return classList;
+    }
+
+    /**
+     * 获取某节课的全部上课时间
+     * @param classid
+     * @return
+     */
+    public Schedules getSchedule(String classid) {
+
+        Schedules schedules=new Schedules();
+        ResultSet rs = null;
+        List<Schedule> mschedules=new ArrayList<Schedule>();
+
+        try {
+            PreparedStatement prepare = connection
+                    .prepareStatement("select * from schedule where classid=?");
+            prepare.setString(1, classid);
+            rs = prepare.executeQuery();
+            while (rs.next()) {
+                Schedule schedule=new Schedule();
+                schedule.setDay(rs.getInt("day"));
+                schedule.setPlace(rs.getString("place"));
+                schedule.setClassname(rs.getString("classname"));
+                schedule.setBeginweek(rs.getInt("beginweek"));
+                schedule.setEndweek(rs.getInt("endweek"));
+                schedule.setBeginclass(rs.getInt("beginclass"));
+                schedule.setEndclass(rs.getInt("endclass"));
+                schedule.setSemester(rs.getInt("smester"));
+                mschedules.add(schedule);
+            }
+            schedules.setSchedules(mschedules);
+            return schedules;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
+        return null;
     }
 }
