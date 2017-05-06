@@ -20,6 +20,8 @@ import java.sql.SQLException;
 
 public class LoginServlet extends HttpServlet{
 
+    private static final int MAXTIME=5*365*24*60*60;
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException,IOException {
@@ -33,8 +35,6 @@ public class LoginServlet extends HttpServlet{
             throws ServletException,IOException {
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
-        //todo upload user info from login.jsp
-
         String school=request.getParameter("school");
         String schoolid=request.getParameter("schoolid");
         String  cschool= URLEncoder.encode(request.getParameter("school"),"UTF-8");
@@ -45,11 +45,10 @@ public class LoginServlet extends HttpServlet{
         userInfo.setSchoolid(schoolid);
         userInfo.setPassword(password);
         userInfo.setSchool(school);
-        //todo add schoolid and school to cookie
         Cookie cSchool=new Cookie("school",cschool);
         Cookie cSchoolid=new Cookie("schoolid",cschoolid);
-        cSchool.setMaxAge(5*365*24*60*60);
-        cSchoolid.setMaxAge(5*365*24*60*60);
+        cSchool.setMaxAge(MAXTIME);
+        cSchoolid.setMaxAge(MAXTIME);
         response.addCookie(cSchool);
         response.addCookie(cSchoolid);
         try {
@@ -64,7 +63,7 @@ public class LoginServlet extends HttpServlet{
                     userInfo.setName(name);
                     String cname=URLEncoder.encode(name,"UTF-8");
                     Cookie cName=new Cookie("name",cname);
-                    cName.setMaxAge(5*365*24*60*60);
+                    cName.setMaxAge(MAXTIME);
                     response.addCookie(cName);
                     session.setAttribute("school",school);
                     session.setAttribute("name",name);
