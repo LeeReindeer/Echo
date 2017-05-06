@@ -3,6 +3,7 @@ package Servlet;
 import ObjectC.OAuth2AccessToken;
 import ObjectC.UserInfo;
 import Util.MysqlUtil;
+import Util.PsqlUtil;
 import Util.WebUtil;
 import Util.dbConnector;
 
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.URLDecoder;
 import java.sql.Connection;
 
@@ -23,27 +25,21 @@ import static Util.MysqlUtil.SCHOOLID;
  */
 public class OAuth2Servlet extends HttpServlet {
 
-    private static final String SplitField=",";
-
     @Override
-    protected void doGet(HttpServletRequest request
-            , HttpServletResponse response)
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException,IOException {
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
+        // 用户同意授权后，能获取到code
+        String code = request.getParameter("code");
+        PrintWriter writer=response.getWriter();
+        writer.println(code);
         //连接数据库.
         Connection connection = dbConnector.getConnector();
         MysqlUtil mysqlUtil = new MysqlUtil(connection);
-        // 用户同意授权后，能获取到code
-            String code = request.getParameter("code");
-            //todo  this method failed,delete
-        /*
-            String state=request.getParameter("state");
-            String []schoolField=state.split(SplitField);
-            String schoolid=schoolField[0];
-            String school=schoolField[1];
-            */
-            if (!"authdeny".equals(code)) {
+        Connection pconnection=dbConnector.getPConnector();
+        PsqlUtil psqlUtil=new PsqlUtil(pconnection);
+        if (code!=null&&!code.equals("")) {
                 WebUtil webUtil = new WebUtil();
                 //通过code换取网页授权的access_token
                 OAuth2AccessToken oAuth2AccessToken = webUtil.getOAuth2AccessToken(code);
@@ -53,14 +49,12 @@ public class OAuth2Servlet extends HttpServlet {
                 String openid = oAuth2AccessToken.getOpenid();
                 //获取用户信息
                 UserInfo userInfo = webUtil.getUserInfo(access_token, openid);
-                UserInfo userInfo1=userInfo;
-                //TODO ADD user's schoolid and school from profile.jsp
-                String schoolid = null;
-                String school=null;
-                String name=null;
-                /*String schoolid=request.getParameter("schoolid");
-                String school=request.getParameter("school");*/
+                //UserInfo userInfo1=userInfo;
+                String schoolid = "";
+                String school="";
+                String name="";
                 //get cookie
+
                 Cookie[]cookies=null;
                 cookies=request.getCookies();
                 if (cookies!=null){
@@ -76,20 +70,34 @@ public class OAuth2Servlet extends HttpServlet {
                         }
                     }
                 }
-                userInfo1.setSchoolid(schoolid);
-                userInfo1.setSchool(school);
-                userInfo1.setName(name);
-                //若数据库中没有此openid
-                if (!mysqlUtil.isUserInSql(userInfo1,OPRNID)&&mysqlUtil.isUserInSql(userInfo1,SCHOOLID)) {
+                userInfo.setSchoolid(schoolid);
+                userInfo.setSchool(school);
+                userInfo.setName(name);
+                //若mysql数据库中没有此openid
+                //!mysqlUtil.isUserInSql(userInfo,OPRNID)&&
+                if (mysqlUtil.isUserInSql(userInfo,SCHOOLID)) {
                     try {
                         //UPDATE openid link to schoolId
-                        mysqlUtil.updateUser(userInfo1,OPRNID);
-                        request.setAttribute("UserInfo", userInfo1);
+                        mysqlUtil.updateUser(userInfo,OPRNID);
+                        request.setAttribute("UserInfo", userInfo);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
                 }
+
+                //request.setAttribute("UserInfo", userInfo);
+                //绑定openid postgrensql
+                /*if (!psqlUtil.isUserInSql(userInfo,OPRNID)&&mysqlUtil.isUserInSql(userInfo,SCHOOLID)) {
+                    try {
+                        //UPDATE openid link to schoolId
+                        psqlUtil.updateUser(userInfo,STUDENT);
+                        request.setAttribute("UserInfo", userInfo);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }*/
             }
+
         request.getRequestDispatcher("message.jsp").forward(request,response);
     }
 }
