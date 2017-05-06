@@ -1,4 +1,4 @@
-package Bean.Menu;
+package ObjectC.Menu;
 
 /**
  * Created by lee on 4/8/17.

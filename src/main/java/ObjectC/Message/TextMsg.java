@@ -1,4 +1,4 @@
-package Bean.Message;
+package ObjectC.Message;
 
 /**
  * Created by lee on 4/8/17.
