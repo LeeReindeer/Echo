@@ -1,7 +1,6 @@
 
 <%@ page language="java" pageEncoding="UTF-8"%>
 <%@ page import="ObjectC.UserInfo"%>
-
 <html>
 <head>
 	<title>账号设置</title>
@@ -15,15 +14,18 @@
 </head>
 <body>
 	<%
-
 		UserInfo user = (UserInfo)request.getAttribute("UserInfo");
 		if(null != user) {
 		String name=user.getName();
+		String openid=user.getOpenid();
+		String schoolid=user.getSchoolid();
 	%>
 
     <center>
 	    <div id="users"><p>
     	  <%=name %>
+    	  <%=schoolid%>
+    	  <%=openid%>
            绑定成功！<br />
     	<a href="profile.jsp">返回个人设置</a>
 	</center>
