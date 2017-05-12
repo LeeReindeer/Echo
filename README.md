@@ -1,9 +1,5 @@
 # Echo
 
-Yappy Doggie
-
-
-
 ## 实现主要功能
 - [x] 微信端
 - [ ] web端
@@ -20,7 +16,7 @@ Yappy Doggie
 - [x] 网页授权
 - [x] 连接数据库
 - [x] 自动登录
-- [x] 显示课表
+- [x] 课表
 - [x] 发送通知
 # License
 GPL-3.0
