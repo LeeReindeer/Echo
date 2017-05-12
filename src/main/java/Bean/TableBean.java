@@ -1,77 +1,58 @@
 package Bean;
 
-import Util.CalUtil;
+import ObjectC.Schedule;
+import Util.MysqlUtil;
 import Util.dbConnector;
 
 import javax.servlet.http.HttpServletRequest;
 import java.sql.Connection;
-import java.util.Hashtable;
+import java.util.List;
 
 /**
- * @Time 4/25/17.
- * @Author Lee
+ * @Author lee
+ * @Time 5/12/17.
  */
 public class TableBean {
-
-    private Connection connection=null;
-    Hashtable table;
-    CalUtil calUtil;
-    String date;
-    int day;
-    Entries entries;
-    boolean processError=false;
-    public TableBean(Connection connection) {
-        this.connection = dbConnector.getConnector();
-    }
-    //todo get class schedule from mysql.
-
-    public TableBean(){
-        this.table=new Hashtable(10);
-        this.calUtil=new CalUtil();
-        this.date=calUtil.getCurrentDate();
-        this.day=calUtil.getDayMon();
+    private Connection connection;
+    //todo 可以改为对象数组
+    private String [][] scheduleArray =new String[13][8];
+    public TableBean() {
+        this.connection= dbConnector.getConnector();
     }
 
-    public String getDate () {
-        return this.date;
-    }
-
-    public int getDay() {
-        return day;
-    }
-
-    public Entries getEntries () {
-        return this.entries;
-    }
-
-    public void processRequest (HttpServletRequest request) {
-        String dateR = request.getParameter ("date");
-        //get date
-        //int dayR=day;
-        if (dateR == null) {date = calUtil.getCurrentDate ();
-        }else if (dateR.equalsIgnoreCase("next")) {
-            date = calUtil.getNextDate ();
-            day=calUtil.getNextDay();
-            //todo wrong
-
-        }else if (dateR.equalsIgnoreCase("prev")) {
-            date = calUtil.getPrevDate ();
-            day=calUtil.getPrevtDay();
-
-        }
-        entries = (Entries) table.get (date);
-        if (entries == null) {
-            entries = new Entries ();
-            table.put (date, entries);
-        }
-
+    public String[][] processRequest(HttpServletRequest request){
         String schoolid=request.getParameter("schoolid");
-        if (schoolid!=null){
-            entries.processRequest(request,day);
+        MysqlUtil mysqlUtil=new MysqlUtil(connection);
+        String WEEK=request.getParameter("week");
+        if (WEEK!=null) {
+            int week = Integer.parseInt(WEEK);
         }
+        List<String> classList=mysqlUtil.getClassSelected("160410218");
+        for (int i=0;i<classList.size();i++){
+            //得到课程对象的列表
+            List<Schedule>mSchedules=mysqlUtil.getSchedule(classList.get(i)).getSchedules();
+            for (int j=0;j<mSchedules.size();j++){
+                Schedule schedule=mSchedules.get(j);
+                setclass(schedule);
+            }
+
+        }
+        return scheduleArray;
     }
 
-    public boolean isProcessError() {
-        return processError;
+    public  void setclass(Schedule schedule){
+        int day=schedule.getDay();
+        int beginclass=schedule.getBeginclass();
+        for (int i = 0; i < 12; i++) {
+            for (int j = 0; j < 7; j++) {
+                if (beginclass==i&&day==j){
+                    scheduleArray[i][j]=schedule.getClassname();
+                    System.out.println("第"+i+"节"+"星期"+j+ scheduleArray[i][j]);
+                }
+            }
+        }
+
+       // return scheduleArray;
     }
+
 }
