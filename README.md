@@ -19,4 +19,4 @@
 - [x] 课表
 - [x] 发送通知
 # License
-GPL-3.0
+Apache 2.0
