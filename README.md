@@ -18,5 +18,7 @@
 - [x] 自动登录
 - [x] 课表
 - [x] 发送通知
+## Preview
+![](http://ojvnx00zs.bkt.clouddn.com/result-2017-05-24-11-07-43.png)
 # License
 Apache 2.0
