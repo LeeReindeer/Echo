@@ -19,9 +19,9 @@ public class dbConnector {
     private final static String drive="com.mysql.jdbc.Driver";
 
     //PostgreSQL
-    private final static String purl="jdbc:postgresql://yappyap.com:5432/echo";
-    private final static String puser="college_10340";
-    private final static String ppassword="O0103400O";
+    private final static String purl="jdbc:postgresql://your postgresql";
+    private final static String puser="user";
+    private final static String ppassword="password";
     private final static  String pdrive="org.postgresql.Driver";
     public static Connection getConnector()  {
         if (connection!=null){
