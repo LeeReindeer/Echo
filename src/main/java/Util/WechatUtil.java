@@ -3,10 +3,14 @@ package Util;
 //import org.json.JSONObject;
 //import com.google.gson.Gson;
 
-import Bean.Menu.Button;
-import Bean.Menu.Menu;
-import Bean.Menu.ViewButton;
 import ObjectC.AccessToken;
+import ObjectC.Menu.Button;
+import ObjectC.Menu.Menu;
+import ObjectC.Menu.ViewButton;
+import ObjectC.Message.ModMessage.ArrivedTime;
+import ObjectC.Message.ModMessage.Content;
+import ObjectC.Message.ModMessage.Data;
+import ObjectC.Message.ModMessage.ModMsg;
 import net.sf.json.JSONObject;
 
 import java.io.*;
@@ -27,10 +31,13 @@ public class WechatUtil {
     private final static String APPSECRET = "760f1f6aab839a8cffde57bad5c114be";
     public final static String ACCESS_TOKEN_URL = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=APPID&secret=APPSECRET";
     public final static String BUtton_URL="https://api.weixin.qq.com/cgi-bin/menu/create?access_token=ACCESS_TOKEN";
+    public final static String MATCH_BUTTON_URL="https://api.weixin.qq.com/cgi-bin/menu/addconditional?access_token=ACCESS_TOKEN";
     public final static String WEB_ACCESS_TOKEN_URL="https://api.weixin.qq.com/sns/oauth2/access_token?appid=APPID&secret=SECRET&code=CODE&grant_type=authorization_code";
     public final static String USER_INFO_URL="https://api.weixin.qq.com/sns/userinfo?access_token=ACCESS_TOKEN&openid=OPENID&lang=zh_CN";
     public final static String REFRESH_ACCESS_TOKEN_URL="https://api.weixin.qq.com/sns/oauth2/refresh_token?appid=APPID&grant_type=refresh_token&refresh_token=REFRESH_TOKEN";
     public final static String AUTH_URL="https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri=REDIRECT_URI&response_type=code&scope=SCOPE&state=STATE#wechat_redirect";
+    public final static String SEND_MODMSG="https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=ACCESS_TOKEN";
+    public final static String GETGROUPS="https://api.weixin.qq.com/cgi-bin/groups/get?access_token=ACCESS_TOKEN";
     //private String response;
 
     public static String getAPPID() {
@@ -41,6 +48,11 @@ public class WechatUtil {
         return APPSECRET;
     }
 
+    /**
+     *
+     * @param url
+     * @return jsonObject
+     */
     public JSONObject doGet(String url) {
         HttpURLConnection connection = null;
         BufferedReader reader = null;
@@ -77,6 +89,12 @@ public class WechatUtil {
         return jsonObject;
     }
 
+    /**
+     *
+     * @param url
+     * @param outStr
+     * @return jsonObject
+     */
     public JSONObject doPost(String url,String outStr) {
         JSONObject jsonObject=null;
         OutputStreamWriter out = null;
@@ -158,27 +176,25 @@ public class WechatUtil {
     */
     public Menu initMenu(){
         Menu menu=new Menu();
-        //String url=AUTH_URL.replace("APPID",APPID).replace("REDIRECT_URI","http://120.24.73.230/Echoo1/OAuth").replace("SCOPE","snsapi_userinfo");
-          String url="http://120.24.73.230/Echoo1/login.jsp";
+        String url=AUTH_URL.replace("APPID",APPID).replace("REDIRECT_URI","http://120.24.73.230/Echoo1/OAuth2Servlet").replace("SCOPE","snsapi_userinfo");
+        //String url="http://120.24.73.230/Echoo1/profile.jsp";
         ViewButton viewButton=new ViewButton();
-        viewButton.setUrl("http://leezoom.xyz");
+        viewButton.setUrl("http://120.24.73.230/Echoo1/sendmsg.jsp");
         viewButton.setName("新建通知");
-
-        //System.out.println("授权网址"+url);
 
         ViewButton viewButton1=new ViewButton();
         viewButton1.setName("课表");
-        viewButton1.setUrl("http://leezoom.xyz");
+        viewButton1.setUrl("http://120.24.73.230/Echoo1/schedule.jsp");
 
         //子菜单
         ViewButton viewButton2=new ViewButton();
-        viewButton2.setName("账号设置");
+        viewButton2.setName("绑定微信");
         viewButton2.setUrl(url);
 
         //子菜单
         ViewButton viewButton3=new ViewButton();
         viewButton3.setName("全部通知");
-        viewButton3.setUrl("http://leezoom.xyz");
+        viewButton3.setUrl("http://120.24.73.230/Echoo1/");
 
 
         Button button=new Button();
@@ -187,6 +203,37 @@ public class WechatUtil {
 
         menu.setButton(new Button[]{viewButton,viewButton1,button});
         return menu;
+    }
+
+    /**
+     * 组装模板消息
+     * @param mcontent
+     * @return
+     */
+    //todo 群发该怎么解决呢
+    public ModMsg initModMsg(String mcontent,String openid){
+        ModMsg modMsg=new ModMsg();
+        CalUtil calUtil=new CalUtil();
+        //modMsg.setTouser(openid);
+        modMsg.setTouser("oU_pi1U6-DLPzbKLLWSiELX5zbNY");//my openid
+        //modMsg.setTouser("oU_pi1QtV1JKoZ71frtg6Ztc_mzY"); simon
+        //modMsg.setTouser("oU_pi1XWg_m1j4zfUztSXCQ4muJ4");//inkzhi
+        //modMsg.setTouser("oU_pi1Z1cAlgE_ZlZeir3QYM1lb8"); //kuy_zeo
+        modMsg.setTemplate_id("CEERjl1uTHHP2d2ABxl3LVDNuHsTqFXBVYE7WmaXbC0");
+        modMsg.setUrl("http://120.24.73.230/Echoo1/sendmsg.jsp");
+        Data data=new Data();
+        //内容
+        Content content=new Content();
+        content.setValue(mcontent);
+        content.setColor("#173177");
+        //时间
+        ArrivedTime arrivedTime=new ArrivedTime();
+        arrivedTime.setValue(calUtil.getCurrentDate());
+        arrivedTime.setColor("#000000");
+        data.setContent(content);
+        data.setArrivedTime(arrivedTime);
+        modMsg.setData(data);
+        return modMsg;
     }
 
 
@@ -204,6 +251,34 @@ public class WechatUtil {
             errcode=jsonObject.getInt("errcode");
         }
         return  errcode;
+    }
+
+    /**
+     * 发送模板信息
+     * @param modmsg
+     * @param token
+     * @return
+     */
+    public int sendModMessage(String modmsg,String token){
+        int errcode=0;
+        String url=SEND_MODMSG.replace("ACCESS_TOKEN",token);
+        JSONObject jsonObject=doPost(url,modmsg);
+        if (jsonObject!=null){
+            errcode=jsonObject.getInt("errcode");
+        }
+        return  errcode;
+    }
+
+    public JSONObject getGroups(String token){
+        int errcode=0;
+        JSONObject jsonObject=null;
+        String url=GETGROUPS.replace("ACCESS_TOKEN",token);
+        jsonObject=doGet(url);
+        if (jsonObject!=null){
+            //errcode=jsonObject.getInt("errcode");
+        return jsonObject;
+        }
+        return jsonObject;
     }
 
     public String getRedirextUrl(){
