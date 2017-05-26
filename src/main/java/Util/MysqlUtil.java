@@ -243,7 +243,7 @@ public class MysqlUtil {
      * @param classid
      * @return
      */
-    public Schedules getSchedule(String classid) {
+    public List<Schedule> getSchedule(String classid) {
 
         Schedules schedules=new Schedules();
         ResultSet rs = null;
@@ -266,8 +266,9 @@ public class MysqlUtil {
                 schedule.setSemester(rs.getInt("smester"));
                 mschedules.add(schedule);
             }
-            schedules.setSchedules(mschedules);
-            return schedules;
+            //schedules.setSchedules(mschedules);
+            //return schedules;
+            return mschedules;
         } catch (SQLException e) {
             e.printStackTrace();
         }
