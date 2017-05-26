@@ -2,7 +2,7 @@
 
 ## 实现主要功能
 - [x] 微信端
-- [ ] web端
+- [x] web端
 - [ ] 移动端
 
 ## Java web 应用
@@ -19,6 +19,6 @@
 - [x] 课表
 - [x] 发送通知
 ## Preview
-![](http://ojvnx00zs.bkt.clouddn.com/result-2017-05-24-11-07-43.png)
+![](http://ojvnx00zs.bkt.clouddn.com/result-2017-05-26-17-44-05.png)
 # License
 Apache 2.0
