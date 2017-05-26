@@ -3,6 +3,7 @@
 <html>
 <head>
 <title>发送通知</title>
+<link rel="shortcut icon" href="home/favicon.ico">
 </head>
 <body>
 
