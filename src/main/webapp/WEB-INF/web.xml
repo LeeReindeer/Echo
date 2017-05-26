@@ -17,7 +17,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>OAuth2Servlet</servlet-name>
-        <url-pattern>/OAuth</url-pattern>
+        <url-pattern>/OAuth2Servlet</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -29,8 +29,17 @@
         <url-pattern>/LoginServlet</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>SendMessageServlet</servlet-name>
+        <servlet-class>Servlet.SendMessageServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SendMessageServlet</servlet-name>
+        <url-pattern>/SendMessageServlet</url-pattern>
+    </servlet-mapping>
+
     <welcome-file-list>
-        <welcome-file>login.jsp</welcome-file>
+        <welcome-file>home/home.html</welcome-file>
     </welcome-file-list>
 
 </web-app>
