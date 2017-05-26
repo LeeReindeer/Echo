@@ -39,7 +39,7 @@
             </h1><!--//logo-->
             <nav id="main-nav" class="main-nav navbar-right" role="navigation">
                 <div class="navbar-header">
-                    <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-collapse">
+                    <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target=".navbar-collapse">
                         <span class="sr-only">Toggle navigation</span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
@@ -56,11 +56,13 @@
             </nav><!--//main-nav-->
         </div>
     </header><!--//header-->
-
-	  <div class="container-fluid">
+    <br>
+    <br>
+    <br>
+	  <div class="container">
 	    <div class="row">
         <main class="col-ms-2 ">
-	  	<div class="table-responsive">
+	  	<div class="table">
 	  	<table class="table table-hover table table-bordered">
 	  	<thead>
 	  	<tr>
@@ -88,7 +90,7 @@
             }
             //rowspan=endclass-startclass+1
         %>
-        <td rowspan="1"><%=scheduleArray[i][j]%></td>
+        <td rowspan="2"><%=scheduleArray[i][j]%></td>
         <%
             }
         %>
