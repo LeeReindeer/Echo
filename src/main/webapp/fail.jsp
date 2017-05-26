@@ -19,6 +19,16 @@
   </div>
 
    <%
+        Cookie[]cookies=null;
+        cookies=request.getCookies();
+        //删除cookies
+        if (cookies!=null){
+
+            for (Cookie temp:cookies){
+                temp.setMaxAge(0);
+                response.addCookie(temp);
+            }
+       }
      response.setHeader("Refresh","5;URL=/Echoo1/login.jsp");
     %>
  </body>
