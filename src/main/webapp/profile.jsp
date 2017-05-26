@@ -54,33 +54,40 @@
 </head>
 
 <body>
-    <!-- ******HEADER****** -->
-    <header id="header" class="header">
-        <div class="container">
-            <h1 class="logo pull-left">
-                <a href="/Echoo1">
-                    <span class="logo-title">Echo</span>
-                </a>
-            </h1><!--//logo-->
-            <nav id="main-nav" class="main-nav navbar-right" role="navigation">
-                <div class="navbar-header">
-                    <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-collapse">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button><!--//nav-toggle-->
-                </div><!--//navbar-header-->
-                <div class="navbar-collapse collapse" id="navbar-collapse">
-                    <ul class="nav navbar-nav">
-                        <li class="active nav-item sr-only"><a href="#promo">Home</a></li>
-                        <li class="nav-item"><a href="schedule.jsp">Schedule</a></li>
-                        <li class="nav-item"><a href="out.jsp">Login out</a></li>
-                    </ul><!--//nav-->
-                </div><!--//navabr-collapse-->
-            </nav><!--//main-nav-->
-        </div>
-    </header><!--//header-->
+        <!-- ******HEADER****** -->
+        <header id="header" class="header">
+            <div class="container">
+                <h1 class="logo pull-left">
+                    <a href="/Echoo1">
+                        <span class="logo-title">Echo</span>
+                    </a>
+                </h1><!--//logo-->
+                <nav id="main-nav" class="main-nav navbar-right" role="navigation">
+                    <div class="navbar-header">
+                        <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target=".navbar-collapse">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button><!--//nav-toggle-->
+                    </div><!--//navbar-header-->
+                    <div class="navbar-collapse collapse" id="navbar-collapse">
+                        <ul class="nav navbar-nav">
+                            <li class="active nav-item sr-only"><a href="#promo">Home</a></li>
+                            <li class="nav-item"><a href="schedule.jsp">Schedule</a></li>
+                            <li class="nav-item"><a href="out.jsp">Login out</a></li>
+                        </ul><!--//nav-->
+                    </div><!--//navabr-collapse-->
+                </nav><!--//main-nav-->
+            </div>
+        </header><!--//header-->
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+
 
 <section class="contact section has-pattern">
 <div class="container">
