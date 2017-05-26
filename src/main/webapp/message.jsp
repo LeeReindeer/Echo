@@ -1,10 +1,10 @@
-
 <%@ page language="java" pageEncoding="UTF-8"%>
 <%@ page import="ObjectC.UserInfo"%>
 <html>
 <head>
 	<title>账号设置</title>
 	<meta name="viewport" content="width=device-width,user-scalable=0">
+	<link rel="shortcut icon" href="home/favicon.ico">
 	<style type="text/css">
 		*{margin:0; padding:0}
 		table{border:1px dashed #B9B9DD;font-size:12pt}
@@ -19,14 +19,16 @@
 		String name=user.getName();
 		String openid=user.getOpenid();
 		String schoolid=user.getSchoolid();
+		String headImage=user.getHeadimgurl();
 	%>
 
     <center>
 	    <div id="users"><p>
-    	  <%=name %>
-    	  <%=schoolid%>
-    	  <%=openid%>
-           绑定成功！<br />
+    	  <%=name %><br>
+    	  <%=schoolid%><br>
+    	  <%=openid%><br>
+    	  <%=headImage%><br>
+           绑定成功！<br>
     	<a href="profile.jsp">返回个人设置</a>
 	</center>
 
