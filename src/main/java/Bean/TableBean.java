@@ -4,7 +4,10 @@ import ObjectC.Schedule;
 import Util.MysqlUtil;
 import Util.dbConnector;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.sql.Connection;
 import java.util.List;
 
@@ -20,17 +23,25 @@ public class TableBean {
         this.connection= dbConnector.getConnector();
     }
 
-    public String[][] processRequest(HttpServletRequest request){
+    public String[][] processRequest(HttpServletRequest request) throws UnsupportedEncodingException {
         String schoolid=request.getParameter("schoolid");
         MysqlUtil mysqlUtil=new MysqlUtil(connection);
         String WEEK=request.getParameter("week");
         if (WEEK!=null) {
             int week = Integer.parseInt(WEEK);
         }
-        List<String> classList=mysqlUtil.getClassSelected("160410218");
+        Cookie[]cookies=null;
+        cookies=request.getCookies();
+        if (cookies!=null){
+            for (Cookie temp:cookies)
+                if (temp.getName().equals("schoolid")){
+                    schoolid=URLDecoder.decode(temp.getValue(),"UTF-8");
+                }
+        }
+        List<String> classList=mysqlUtil.getClassSelected(schoolid);
         for (int i=0;i<classList.size();i++){
-            //得到课程对象的列表
-            List<Schedule>mSchedules=mysqlUtil.getSchedule(classList.get(i)).getSchedules();
+            //得到所有课程对象的列表
+            List<Schedule>mSchedules=mysqlUtil.getSchedule(classList.get(i));
             for (int j=0;j<mSchedules.size();j++){
                 Schedule schedule=mSchedules.get(j);
                 setclass(schedule);
@@ -40,6 +51,10 @@ public class TableBean {
         return scheduleArray;
     }
 
+    /**
+     * 将课表信息存在数组中
+     * @param schedule
+     */
     public  void setclass(Schedule schedule){
         int day=schedule.getDay();
         int beginclass=schedule.getBeginclass();
