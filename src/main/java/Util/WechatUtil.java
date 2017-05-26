@@ -210,7 +210,6 @@ public class WechatUtil {
      * @param mcontent
      * @return
      */
-    //todo 群发该怎么解决呢
     public ModMsg initModMsg(String mcontent,String openid){
         ModMsg modMsg=new ModMsg();
         CalUtil calUtil=new CalUtil();
