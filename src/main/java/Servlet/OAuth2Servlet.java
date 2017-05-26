@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.net.URLDecoder;
 import java.sql.Connection;
 
@@ -32,8 +31,8 @@ public class OAuth2Servlet extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
         // 用户同意授权后，能获取到code
         String code = request.getParameter("code");
-        PrintWriter writer=response.getWriter();
-        writer.println(code);
+        //PrintWriter writer=response.getWriter();
+        //writer.println(code);
         //连接数据库.
         Connection connection = dbConnector.getConnector();
         MysqlUtil mysqlUtil = new MysqlUtil(connection);
@@ -54,7 +53,6 @@ public class OAuth2Servlet extends HttpServlet {
                 String school="";
                 String name="";
                 //get cookie
-
                 Cookie[]cookies=null;
                 cookies=request.getCookies();
                 if (cookies!=null){
@@ -73,20 +71,22 @@ public class OAuth2Servlet extends HttpServlet {
                 userInfo.setSchoolid(schoolid);
                 userInfo.setSchool(school);
                 userInfo.setName(name);
-                //若mysql数据库中没有此openid
-                //!mysqlUtil.isUserInSql(userInfo,OPRNID)&&
-                if (mysqlUtil.isUserInSql(userInfo,SCHOOLID)) {
+                //跳转团队业务
+                //response.sendRedirect("http://yappyap.com/schedule?openid="+openid);
+                //自己的业务
+                //todo 跳转到profile.jsp，通过参数显示是否绑定
+                request.setAttribute("UserInfo", userInfo);
+                request.getRequestDispatcher("message.jsp").forward(request,response);
+                if (mysqlUtil.isUserInSql(userInfo,SCHOOLID)&&!mysqlUtil.isUserInSql(userInfo,OPRNID)) {
                     try {
-                        //UPDATE openid link to schoolId
+                        //link  openid to schoolId
                         mysqlUtil.updateUser(userInfo,OPRNID);
-                        request.setAttribute("UserInfo", userInfo);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
                 }
 
-                //request.setAttribute("UserInfo", userInfo);
-                //绑定openid postgrensql
+                //postgrensql
                 /*if (!psqlUtil.isUserInSql(userInfo,OPRNID)&&mysqlUtil.isUserInSql(userInfo,SCHOOLID)) {
                     try {
                         //UPDATE openid link to schoolId
@@ -98,6 +98,7 @@ public class OAuth2Servlet extends HttpServlet {
                 }*/
             }
 
-        request.getRequestDispatcher("message.jsp").forward(request,response);
+        //request.getRequestDispatcher("message.jsp").forward(request,response);
+
     }
 }
